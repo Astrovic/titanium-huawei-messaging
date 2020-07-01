@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ti:module xmlns:ti="http://ti.appcelerator.org" xmlns:android="http://schemas.android.com/apk/res/android">
+	<android xmlns:android="http://schemas.android.com/apk/res/android">
+		<manifest package="firebase.cloudmessaging">
+			<uses-permission android:name="android.permission.WAKE_LOCK"/>
+			<uses-permission android:name="android.permission.VIBRATE"/>
+			<application>
+				<service
+					android:name="huawei.messaging.MessagingService"
+					android:exported="false">
+					<intent-filter>
+							<action android:name="com.huawei.push.action.MESSAGING_EVENT" />
+					</intent-filter>
+				</service>
+				<activity android:name="huawei.messaging.PushHandlerActivity" android:exported="true"/>
+			</application>
+		</manifest>
+	</android>
+</ti:module>
