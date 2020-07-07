@@ -10,3 +10,9 @@ dependencies {
     implementation "com.huawei.hms:push:3.0.0.301"
     implementation "com.huawei.hms:iap:3.0.0.301"
 }
+
+android {
+  packagingOptions {
+      exclude 'META-INF/*.kotlin_module'
+  }
+}
