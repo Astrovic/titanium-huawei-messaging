@@ -26,7 +26,6 @@ class ClickListener : AGConnectAppMessagingOnClickListener {
 class TitaniumHuaweiMessagingModule : KrollModule() {
 
     private lateinit var instance: AGConnectAppMessaging
-    private var fcmToken: String = ""
 
     init {
         moduleInstance = this
@@ -131,11 +130,10 @@ class TitaniumHuaweiMessagingModule : KrollModule() {
 
     fun onTokenRefresh(token: String) {
         try {
-            if (hasListeners("didRefreshRegistrationToken")) {
+            if (hasListeners("didRefreshToken")) {
                 val data = KrollDict()
-                data["fcmToken"] = token
-                fireEvent("didRefreshRegistrationToken", data)
-                fcmToken = token
+                data["token"] = token
+                fireEvent("didRefreshToken", data)
             }
         } catch (e: Exception) {
             Log.e("HMS", "Can't refresh token: " + e.message)
