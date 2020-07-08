@@ -5,10 +5,10 @@ repositories {
 dependencies {
 	implementation 'com.huawei.agconnect:agconnect-appmessaging:1.3.2.301'
 
-    implementation "com.huawei.hms:base:3.0.0.301"
-    implementation "com.huawei.hms:hwid:3.0.0.301"
-    implementation "com.huawei.hms:push:3.0.0.301"
-    implementation "com.huawei.hms:iap:3.0.0.301"
+    implementation "com.huawei.hms:base:4.0.3.301"
+    implementation "com.huawei.hms:push:4.0.3.301"
+//    implementation "com.huawei.hms:hwid:4.0.3.301"
+//    implementation "com.huawei.hms:iap:4.0.3.301"
 }
 
 android {
