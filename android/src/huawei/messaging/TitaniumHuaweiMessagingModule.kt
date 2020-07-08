@@ -1,12 +1,15 @@
 package huawei.messaging
 
+import android.text.TextUtils
 import com.huawei.agconnect.appmessaging.AGConnectAppMessaging
 import com.huawei.agconnect.appmessaging.AGConnectAppMessagingOnClickListener
 import com.huawei.agconnect.appmessaging.model.AppMessage
 import com.huawei.agconnect.config.AGConnectServicesConfig
 import com.huawei.hms.aaid.HmsInstanceId
+import com.huawei.hms.common.ApiException
 import com.huawei.hms.push.HmsMessaging
 import org.appcelerator.kroll.KrollDict
+import org.appcelerator.kroll.KrollFunction
 import org.appcelerator.kroll.KrollModule
 import org.appcelerator.kroll.annotations.Kroll.*
 import org.appcelerator.kroll.common.Log
@@ -77,17 +80,41 @@ class TitaniumHuaweiMessagingModule : KrollModule() {
         }
     }
 
-    @getProperty
     @method
-    fun getToken(): String {
-        val appId = AGConnectServicesConfig.fromContext(TiApplication.getAppCurrentActivity()).getString("client/app_id")
-        return HmsInstanceId.getInstance(TiApplication.getAppCurrentActivity()).getToken(appId, "HCM")
+    fun getToken(callback: KrollFunction) {
+        object : Thread() {
+            override fun run() {
+                val event = KrollDict()
+
+                try {
+                    val appId = AGConnectServicesConfig.fromContext(TiApplication.getAppCurrentActivity()).getString("client/app_id")
+                    val token = HmsInstanceId.getInstance(TiApplication.getAppCurrentActivity()).getToken(appId, "HCM")
+
+                    event["success"] = true
+                    event["token"] = token
+
+                } catch (e: ApiException) {
+                    Log.e("HCM", "Cannot get token: " + e.message)
+                    event["success"] = false
+                }
+
+                callback.callAsync(getKrollObject(), event)
+            }
+        }.start()
     }
 
     @method
     fun deleteToken() {
-        val appId = AGConnectServicesConfig.fromContext(TiApplication.getAppCurrentActivity()).getString("client/app_id")
-        HmsInstanceId.getInstance(TiApplication.getAppCurrentActivity()).deleteToken(appId, "HCM")
+        object : Thread() {
+            override fun run() {
+                try {
+                    val appId = AGConnectServicesConfig.fromContext(TiApplication.getAppCurrentActivity()).getString("client/app_id")
+                    HmsInstanceId.getInstance(TiApplication.getAppCurrentActivity()).deleteToken(appId, "HCM")
+                } catch (e: ApiException) {
+                    Log.e("HCM", "Cannot delete token: " + e.message)
+                }
+            }
+        }.start()
     }
 
     fun onTokenRefresh(token: String) {
