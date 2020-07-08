@@ -1,6 +1,5 @@
 package huawei.messaging
 
-import android.text.TextUtils
 import com.huawei.agconnect.appmessaging.AGConnectAppMessaging
 import com.huawei.agconnect.appmessaging.AGConnectAppMessagingOnClickListener
 import com.huawei.agconnect.appmessaging.model.AppMessage
@@ -8,13 +7,14 @@ import com.huawei.agconnect.config.AGConnectServicesConfig
 import com.huawei.hms.aaid.HmsInstanceId
 import com.huawei.hms.common.ApiException
 import com.huawei.hms.push.HmsMessaging
+import com.huawei.hms.push.RemoteMessage
 import org.appcelerator.kroll.KrollDict
 import org.appcelerator.kroll.KrollFunction
 import org.appcelerator.kroll.KrollModule
 import org.appcelerator.kroll.annotations.Kroll.*
 import org.appcelerator.kroll.common.Log
 import org.appcelerator.titanium.TiApplication
-
+import java.util.*
 
 class ClickListener : AGConnectAppMessagingOnClickListener {
     override fun onMessageClick(appMessage: AppMessage) {
@@ -115,6 +115,18 @@ class TitaniumHuaweiMessagingModule : KrollModule() {
                 }
             }
         }.start()
+    }
+
+    fun onMessageReceived(message: RemoteMessage) {
+        if (!hasListeners("didReceiveMessage")) { return }
+
+        try {
+            val data = KrollDict()
+            data["message"] = message.notification.body
+            fireEvent("didReceiveMessage", data)
+        } catch (e: java.lang.Exception) {
+            Log.e("HCM", "Message exception: " + e.message)
+        }
     }
 
     fun onTokenRefresh(token: String) {
