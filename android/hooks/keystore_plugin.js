@@ -1,4 +1,4 @@
-exports.id = 'gradle_plugins';
+exports.id = 'keystore_plugin';
 exports.cliVersion = '>=3.2';
 exports.init = init;
 
