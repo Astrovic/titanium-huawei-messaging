@@ -2,6 +2,7 @@ package huawei.messaging
 
 import com.huawei.agconnect.appmessaging.AGConnectAppMessaging
 import com.huawei.agconnect.appmessaging.AGConnectAppMessagingOnClickListener
+import com.huawei.agconnect.appmessaging.model.Action
 import com.huawei.agconnect.appmessaging.model.AppMessage
 import com.huawei.agconnect.config.AGConnectServicesConfig
 import com.huawei.hms.aaid.HmsInstanceId
@@ -16,8 +17,9 @@ import org.appcelerator.kroll.common.Log
 import org.appcelerator.titanium.TiApplication
 import java.util.*
 
+
 class ClickListener : AGConnectAppMessagingOnClickListener {
-    override fun onMessageClick(appMessage: AppMessage) {
+    override fun onMessageClick(appMessage: AppMessage, action: Action) {
         // Obtain the content of the tapped message.
     }
 }
