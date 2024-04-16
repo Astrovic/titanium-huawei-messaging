@@ -123,7 +123,7 @@ class TitaniumHuaweiMessagingModule : KrollModule() {
 
         try {
             val data = KrollDict()
-            data["message"] = message.notification.body
+            data["message"] = message.data ?: message.notification.body
             fireEvent("didReceiveMessage", data)
         } catch (e: java.lang.Exception) {
             Log.e("HCM", "Message exception: " + e.message)

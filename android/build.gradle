@@ -3,10 +3,8 @@ repositories {
 }
 
 dependencies {
-  implementation 'com.huawei.agconnect:agconnect-appmessaging:1.6.5.300'
-
-  implementation "com.huawei.hms:base:5.1.0.300"
-  implementation "com.huawei.hms:push:6.3.0.304"
+  implementation 'com.huawei.agconnect:agconnect-appmessaging:1.9.1.302'
+  implementation "com.huawei.hms:push:6.11.0.300"
 }
 
 android {

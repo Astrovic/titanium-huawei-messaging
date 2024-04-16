@@ -14,6 +14,11 @@
 				</service>
 				<activity android:name="huawei.messaging.PushHandlerActivity" android:exported="true"/>
 			</application>
+			<queries>
+				<intent>
+					<action android:name="com.huawei.hms.core.aidlservice" />
+				</intent>
+			</queries>
 		</manifest>
 	</android>
 </ti:module>
